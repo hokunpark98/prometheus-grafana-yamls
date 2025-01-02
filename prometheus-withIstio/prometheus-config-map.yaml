@@ -31,7 +31,6 @@ data:
         annotations:
           summary: High Cpu Usage
 
-
   prometheus.yml: |-
     global:
       scrape_interval: 5s
@@ -79,7 +78,7 @@ data:
           target_label: __metrics_path__
           replacement: /api/v1/nodes/${1}/proxy/metrics
 
-   
+
       - job_name: 'node-info'
         static_configs:
         - targets: ['192.168.0.10:9100', '192.168.0.11:9100', '192.168.0.12:9100', '192.168.0.13:9100', '192.168.0.14:9100', '192.168.0.15:9100']
@@ -408,3 +407,20 @@ data:
         - source_labels: [__meta_kubernetes_service_name]
           action: replace
           target_label: kubernetes_name
+
+
+      - job_name: 'envoy-sidecars'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_sidecar_istio_io_inject]
+            action: keep
+            regex: "true"
+          
+          - source_labels: [__meta_kubernetes_pod_container_port_number]
+            action: keep
+            regex: "15020"
+
+
+        metrics_path: /stats/prometheus
+        scheme: http

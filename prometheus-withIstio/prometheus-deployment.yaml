@@ -14,11 +14,11 @@ spec:
         app: prometheus-server
     spec:
       tolerations:
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-        effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"
       nodeSelector:
-        node: younha  # 컨트롤 플레인 노드 레이블
+        node: younha # 컨트롤 플레인 노드 레이블
       containers:
         - name: prometheus
           image: prom/prometheus:latest
