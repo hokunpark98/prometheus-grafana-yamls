@@ -321,7 +321,7 @@ data:
           - source_labels: [__param_target]
             target_label: instance
           - target_label: __address__
-            replacement: blackbox-exporter-worker4.monitoring.svc.cluster.local:9115
+            replacement: blackbox-exporter-worker5.monitoring.svc.cluster.local:9115
           - source_labels: [__param_target]
             regex: 192.168.0.11
             replacement: worker1
